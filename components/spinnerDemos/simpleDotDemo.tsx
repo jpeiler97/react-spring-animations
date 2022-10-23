@@ -56,17 +56,7 @@ export default function SimpleSpinnerDemo() {
           <Text>Press to {allLoading ? "stop" : "start"} all spinners</Text>
         </TouchableOpacity>
         <View style={{ alignItems: "center" }}>
-          <Text
-            style={{
-              fontSize: 18,
-              fontWeight: "bold",
-              borderBottomColor: "gray",
-              borderBottomWidth: 2,
-              paddingBottom: 5,
-            }}
-          >
-            Simple Dot Spinner Variants
-          </Text>
+          <Text style={styles.demoHeader}>Simple Dot Spinner Variants</Text>
           <View style={{ flexDirection: "row" }}>
             <View style={styles.loaderContainer}>
               <Text
@@ -123,7 +113,7 @@ export default function SimpleSpinnerDemo() {
           </View>
         </View>
       </View>
-      <OverlaySpinner color="white" type="square" loading={overlay} />
+      <OverlaySpinner color="white" type="circle" loading={overlay} />
     </>
   );
 }
@@ -134,6 +124,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+  },
+  demoHeader: {
+    fontSize: 18,
+    fontWeight: "bold",
+    borderBottomColor: "gray",
+    borderBottomWidth: 2,
+    paddingBottom: 5,
   },
   loaderContainer: {
     marginHorizontal: 10,

@@ -1,17 +1,23 @@
 import Spinner from "./spinner";
 import { View, StyleSheet } from "react-native";
-import { animated, useSpring, useTransition } from "@react-spring/native";
 
-const AnimatedView = animated(View);
+type OverlaySpinnerProps = {
+  loading: boolean;
+  color?: string;
+  type?: "square" | "circle" | "pully" | "zigzag"; //replace with keyof typeof [Spinners]
+};
 
-export default function OverlaySpinner({ loading, ...props }) {
+export default function OverlaySpinner({
+  loading,
+  ...props
+}: OverlaySpinnerProps) {
   return (
     <>
       {loading && (
-        <AnimatedView key="overlay-spinner" style={styles.container}>
+        <View key="overlay-spinner" style={styles.container}>
           <View style={styles.spinnerView}></View>
           <Spinner {...props} />
-        </AnimatedView>
+        </View>
       )}
     </>
   );

@@ -10,12 +10,14 @@ const spinnerStyles = {
 
 const AnimatedView = animated(View);
 
-export default function Spinner({
-  type = "square",
-  ...props
-}: {
+type SpinnerProps = {
   type?: keyof typeof spinnerStyles;
-}) {
+  speed?: number;
+  dotCount?: number;
+  color?: string;
+};
+
+export default function Spinner({ type = "square", ...props }: SpinnerProps) {
   const SpinnerComponent = spinnerStyles[type] || type;
 
   return <SpinnerComponent {...props} />;
@@ -35,13 +37,13 @@ export function SquareSpinner({ ...props }) {
 
   return (
     <AnimatedView
-      style={{
-        position: "relative",
-        width: 25,
-        height: 25,
-        transform: [{ rotateZ: rotateZ.to([0, 360], ["0deg", "360deg"]) }],
-        ...spinnerProps,
-      }}
+      style={[
+        styles.squareSpinner,
+        {
+          transform: [{ rotateZ: rotateZ.to([0, 360], ["0deg", "360deg"]) }],
+          ...spinnerProps,
+        },
+      ]}
     >
       <View
         style={[
@@ -96,6 +98,7 @@ export function CircleSpinner({
 }: {
   speed?: number;
   dotCount?: number;
+  color?: string;
 }) {
   const { rotateZ, ...spinnerProps } = useSpring({
     enter: { rotateZ: 0 },
@@ -139,22 +142,21 @@ export function CircleSpinner({
 
   return (
     <AnimatedView
-      style={{
-        position: "relative",
-        width: 30,
-        height: 30,
-        borderRadius: 100,
-        transform: [{ rotateZ: rotateZ.to([0, 360], ["0deg", "360deg"]) }],
-        ...spinnerProps,
-      }}
+      style={[
+        styles.circleSpinner,
+        {
+          transform: [{ rotateZ: rotateZ.to([0, 360], ["0deg", "360deg"]) }],
+          ...spinnerProps,
+        },
+      ]}
     >
       {dots(dotCount)}
     </AnimatedView>
   );
 }
 
-export function PullySpinner({ ...props }) {
-  const { position, ...spinnerProps } = useSpring({
+export function PullySpinner({ ...props }: { color?: string }) {
+  const { position } = useSpring({
     enter: { position: 0 },
     from: { position: 0 },
     to: { position: 1 },
@@ -166,22 +168,11 @@ export function PullySpinner({ ...props }) {
   });
 
   return (
-    <AnimatedView
-      style={{
-        position: "relative",
-        justifyContent: "space-evenly",
-        flexDirection: "row",
-        width: 25,
-        height: 20,
-        borderRadius: 100,
-        ...spinnerProps,
-      }}
-    >
+    <AnimatedView style={styles.pullySpinner}>
       <View style={{ flexGrow: 1, alignItems: "center" }}>
         <AnimatedView
           style={[
             styles.dot,
-
             {
               ...(props.color && { backgroundColor: props.color }),
               transform: [{ translateY: position.to([0, 1], [20, 0]) }],
@@ -193,7 +184,6 @@ export function PullySpinner({ ...props }) {
         <AnimatedView
           style={[
             styles.dot,
-
             {
               ...(props.color && { backgroundColor: props.color }),
               transform: [{ translateY: position.to([0, 1], [0, 20]) }],
@@ -205,7 +195,6 @@ export function PullySpinner({ ...props }) {
         <AnimatedView
           style={[
             styles.dot,
-
             {
               ...(props.color && { backgroundColor: props.color }),
               transform: [{ translateY: position.to([0, 1], [20, 0]) }],
@@ -217,8 +206,8 @@ export function PullySpinner({ ...props }) {
   );
 }
 
-export function ZigZagSpinner({ ...props }) {
-  const { position, ...spinnerProps } = useSpring({
+export function ZigZagSpinner({ ...props }: { color?: string }) {
+  const { position } = useSpring({
     enter: { position: 0 },
     from: { position: 0 },
     to: { position: 1 },
@@ -232,17 +221,7 @@ export function ZigZagSpinner({ ...props }) {
   const height = 10;
 
   return (
-    <AnimatedView
-      style={{
-        position: "relative",
-        justifyContent: "space-evenly",
-        flexDirection: "row",
-        width: 45,
-        height: height,
-        borderRadius: 100,
-        ...spinnerProps,
-      }}
-    >
+    <View style={[styles.zigZagSpinner, { height }]}>
       <View style={{ flexGrow: 1, alignItems: "center" }}>
         <AnimatedView
           style={[
@@ -299,86 +278,7 @@ export function ZigZagSpinner({ ...props }) {
           ]}
         />
       </View>
-    </AnimatedView>
-  );
-}
-export function CircularSpinner() {
-  const { position, ...props } = useSpring({
-    enter: { position: 0 },
-    from: { position: 0 },
-    to: { position: 1 },
-    loop: { reverse: true },
-    reset: true,
-    config: {
-      duration: 300,
-    },
-  });
-
-  const height = 10;
-
-  return (
-    <AnimatedView
-      style={{
-        position: "relative",
-        justifyContent: "space-evenly",
-        flexDirection: "row",
-        width: 45,
-        height: height,
-        borderRadius: 100,
-        ...props,
-      }}
-    >
-      <View style={{ flexGrow: 1, alignItems: "center" }}>
-        <AnimatedView
-          style={[
-            styles.dot,
-            {
-              transform: [{ translateY: position.to([0, 1], [height, 0]) }],
-            },
-          ]}
-        />
-      </View>
-      <View style={{ flexGrow: 1, alignItems: "center" }}>
-        <AnimatedView
-          style={[
-            styles.dot,
-            {
-              transform: [{ translateY: position.to([0, 1], [0, height]) }],
-            },
-          ]}
-        />
-      </View>
-      <View style={{ flexGrow: 1, alignItems: "center" }}>
-        <AnimatedView
-          style={[
-            styles.dot,
-            {
-              transform: [{ translateY: position.to([0, 1], [height, 0]) }],
-            },
-          ]}
-        />
-      </View>
-      <View style={{ flexGrow: 1, alignItems: "center" }}>
-        <AnimatedView
-          style={[
-            styles.dot,
-            {
-              transform: [{ translateY: position.to([0, 1], [0, height]) }],
-            },
-          ]}
-        />
-      </View>
-      <View style={{ flexGrow: 1, alignItems: "center" }}>
-        <AnimatedView
-          style={[
-            styles.dot,
-            {
-              transform: [{ translateY: position.to([0, 1], [height, 0]) }],
-            },
-          ]}
-        />
-      </View>
-    </AnimatedView>
+    </View>
   );
 }
 
@@ -399,5 +299,34 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 13,
     left: 13,
+  },
+  squareSpinner: {
+    position: "relative",
+    justifyContent: "space-evenly",
+    flexDirection: "row",
+    width: 25,
+    height: 25,
+    borderRadius: 100,
+  },
+  circleSpinner: {
+    position: "relative",
+    width: 30,
+    height: 30,
+    borderRadius: 100,
+  },
+  pullySpinner: {
+    position: "relative",
+    justifyContent: "space-evenly",
+    flexDirection: "row",
+    width: 25,
+    height: 20,
+    borderRadius: 100,
+  },
+  zigZagSpinner: {
+    position: "relative",
+    justifyContent: "space-evenly",
+    flexDirection: "row",
+    width: 45,
+    borderRadius: 100,
   },
 });
