@@ -13,6 +13,11 @@ Prop "type" uses a string to denote which spinner to render.
 - Pully
 - ZigZag
 
+### **Complex Dot Spinners**
+
+Dot-based spinners with more complex styles/animation than simple movement.
+- Carousel
+
 ### **Overlay Spinner**
 
 A wrapper for the Spinner component that renders the spinner on an overlay with a transparent background, which prevents clicking on the screen until the loading prop is set back to false.
