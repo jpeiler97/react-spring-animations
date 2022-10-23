@@ -8,26 +8,17 @@ const AnimatedView = animated(View);
 
 export default function ComplexSpinnerDemo() {
   const initLoadingState = {
-    square: false,
-    circle: false,
-    pully: false,
-    zigzag: false,
+    carousel: false,
   };
 
   const allLoadingState = {
-    square: true,
-    circle: true,
-    pully: true,
-    zigzag: true,
+    carousel: true,
   };
 
   const [loading, setLoading] = useState(initLoadingState);
   const [overlay, toggleOverlay] = useState(false);
 
-  const squareViewProps = useSpring({ opacity: loading.square ? 1 : 0 });
-  const circleViewProps = useSpring({ opacity: loading.circle ? 1 : 0 });
-  const pullyViewProps = useSpring({ opacity: loading.pully ? 1 : 0 });
-  const zigZagViewProps = useSpring({ opacity: loading.zigzag ? 1 : 0 });
+  const carouselViewProps = useSpring({ opacity: loading.carousel ? 1 : 0 });
 
   const allLoading = Object.values(loading).some((state) => state);
 
@@ -65,65 +56,26 @@ export default function ComplexSpinnerDemo() {
               paddingBottom: 5,
             }}
           >
-            Simple Dot Spinner Variants
+            Complex Dot Spinner Variants
           </Text>
           <View style={{ flexDirection: "row" }}>
             <View style={styles.loaderContainer}>
               <Text
                 style={styles.loaderLabel}
                 onPress={() =>
-                  setLoading({ ...loading, square: !loading.square })
+                  setLoading({ ...loading, carousel: !loading.carousel })
                 }
               >
-                Square
+                Carousel
               </Text>
-              <AnimatedView style={[styles.loaderDisplay, squareViewProps]}>
-                {loading.square && <Spinner type="square" />}
-              </AnimatedView>
-            </View>
-            <View style={styles.loaderContainer}>
-              <Text
-                style={styles.loaderLabel}
-                onPress={() =>
-                  setLoading({ ...loading, circle: !loading.circle })
-                }
-              >
-                Circle
-              </Text>
-              <AnimatedView style={[styles.loaderDisplay, circleViewProps]}>
-                {loading.circle && <Spinner type="circle" dotCount={6} />}
-              </AnimatedView>
-            </View>
-            <View style={styles.loaderContainer}>
-              <Text
-                style={styles.loaderLabel}
-                onPress={() =>
-                  setLoading({ ...loading, pully: !loading.pully })
-                }
-              >
-                Pully
-              </Text>
-              <AnimatedView style={[styles.loaderDisplay, pullyViewProps]}>
-                {loading.pully && <Spinner type="pully" />}
-              </AnimatedView>
-            </View>
-            <View style={styles.loaderContainer}>
-              <Text
-                style={styles.loaderLabel}
-                onPress={() =>
-                  setLoading({ ...loading, zigzag: !loading.zigzag })
-                }
-              >
-                Zig Zag
-              </Text>
-              <AnimatedView style={[styles.loaderDisplay, zigZagViewProps]}>
-                {loading.zigzag && <Spinner type="zigzag" />}
+              <AnimatedView style={[styles.loaderDisplay, carouselViewProps]}>
+                {loading.carousel && <Spinner type="carousel" />}
               </AnimatedView>
             </View>
           </View>
         </View>
       </View>
-      <OverlaySpinner color="white" type="square" loading={overlay} />
+      <OverlaySpinner color="white" type="carousel" loading={overlay} />
     </>
   );
 }

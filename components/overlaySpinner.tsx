@@ -6,7 +6,7 @@ type OverlaySpinnerProps = {
   color?: string;
   speed?: number;
   size?: number;
-  type?: "square" | "circle" | "pully" | "zigzag"; //replace with keyof typeof [Spinners]
+  type?: "square" | "circle" | "pully" | "zigzag" | "carousel"; //replace with keyof typeof [Spinners]
 };
 
 export default function OverlaySpinner({

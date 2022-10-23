@@ -1,3 +1,4 @@
+import { CarouselSpinner } from "./spinners/complexDot";
 import {
   SquareSpinner,
   CircleSpinner,
@@ -6,10 +7,13 @@ import {
 } from "./spinners/simpleDot";
 
 const spinnerStyles = {
+  //simple dot
   square: SquareSpinner,
   circle: CircleSpinner,
   pully: PullySpinner,
   zigzag: ZigZagSpinner,
+  //complex dot
+  carousel: CarouselSpinner,
 };
 
 type SpinnerProps = {
