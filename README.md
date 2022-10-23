@@ -17,6 +17,7 @@ Prop "type" uses a string to denote which spinner to render.
 
 A wrapper for the Spinner component that renders the spinner on an overlay with a transparent background, which prevents clicking on the screen until the loading prop is set back to false.
 
+---
 
 Want to try it out? 
 
