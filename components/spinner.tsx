@@ -15,6 +15,7 @@ type SpinnerProps = {
   speed?: number;
   dotCount?: number;
   color?: string;
+  size?: number;
 };
 
 export default function Spinner({ type = "square", ...props }: SpinnerProps) {
@@ -26,8 +27,8 @@ export default function Spinner({ type = "square", ...props }: SpinnerProps) {
 export function SquareSpinner({ ...props }) {
   const { rotateZ, ...spinnerProps } = useSpring({
     enter: { rotateZ: 0 },
-    from: { rotateZ: 360 },
-    to: { rotateZ: 0 },
+    from: { rotateZ: 0 },
+    to: { rotateZ: 360 },
     loop: true,
     reset: true,
     config: {
@@ -94,16 +95,18 @@ export function SquareSpinner({ ...props }) {
 export function CircleSpinner({
   speed = 1,
   dotCount = 6,
+  size = 30,
   ...props
 }: {
   speed?: number;
   dotCount?: number;
   color?: string;
+  size?: number;
 }) {
   const { rotateZ, ...spinnerProps } = useSpring({
     enter: { rotateZ: 0 },
-    from: { rotateZ: 360 },
-    to: { rotateZ: 0 },
+    from: { rotateZ: 0 },
+    to: { rotateZ: 360 },
     loop: true,
     reset: true,
     config: {
@@ -115,6 +118,10 @@ export function CircleSpinner({
     const dotArray = [];
     const slice = 360 / numOfDots;
     const start = -90;
+    const dotSize = size / 6;
+    const offset = size / 2;
+    const dotPosition = offset - dotSize / 2;
+
     for (let i = 0; i <= numOfDots; i++) {
       const rotate = slice * i + start;
       const rotateReverse = rotate * -1;
@@ -125,10 +132,14 @@ export function CircleSpinner({
             styles.circleDot,
 
             {
+              height: dotSize,
+              width: dotSize,
+              bottom: dotPosition,
+              left: dotPosition,
               ...(props.color && { backgroundColor: props.color }),
               transform: [
                 { rotateZ: `${rotate}deg` },
-                { translateX: 15, translateY: 15 },
+                { translateX: offset, translateY: offset },
                 { rotateZ: `${rotateReverse}deg` },
               ],
             },
@@ -145,6 +156,8 @@ export function CircleSpinner({
       style={[
         styles.circleSpinner,
         {
+          height: size,
+          width: size,
           transform: [{ rotateZ: rotateZ.to([0, 360], ["0deg", "360deg"]) }],
           ...spinnerProps,
         },
@@ -293,12 +306,8 @@ const styles = StyleSheet.create({
   },
   circleDot: {
     borderRadius: 100,
-    width: 4,
-    height: 4,
     backgroundColor: "black",
     position: "absolute",
-    bottom: 13,
-    left: 13,
   },
   squareSpinner: {
     position: "relative",

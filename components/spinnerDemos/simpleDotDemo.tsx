@@ -81,7 +81,7 @@ export default function SimpleSpinnerDemo() {
                 Circle
               </Text>
               <AnimatedView style={[styles.loaderDisplay, circleViewProps]}>
-                {loading.circle && <Spinner type="circle" dotCount={6} />}
+                {loading.circle && <Spinner type="circle" size={30} />}
               </AnimatedView>
             </View>
             <View style={styles.loaderContainer}>
@@ -113,7 +113,13 @@ export default function SimpleSpinnerDemo() {
           </View>
         </View>
       </View>
-      <OverlaySpinner color="white" type="circle" loading={overlay} />
+      <OverlaySpinner
+        color="white"
+        type="circle"
+        loading={overlay}
+        size={40}
+        speed={0.7}
+      />
     </>
   );
 }

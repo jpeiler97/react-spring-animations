@@ -4,6 +4,8 @@ import { View, StyleSheet } from "react-native";
 type OverlaySpinnerProps = {
   loading: boolean;
   color?: string;
+  speed?: number;
+  size?: number;
   type?: "square" | "circle" | "pully" | "zigzag"; //replace with keyof typeof [Spinners]
 };
 
